@@ -55,7 +55,7 @@ public class CoolWeatherDB {
             ContentValues values = new ContentValues();
             values.put("province_name", province.getProvinceName());
             values.put("province_code", province.getProvinceCode());
-            db.insert("Province", null, values);
+            db.insert("Province",null, values);
         }
     }
 
@@ -68,7 +68,7 @@ public class CoolWeatherDB {
         if (cursor.moveToFirst()){
             do {
                 Province province = new Province();
-                province.setId(cursor.getColumnIndex("id"));
+                province.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 province.setProvinceName(cursor.getString(cursor.getColumnIndex("province_name")));
                 province.setProvinceCode(cursor.getString(cursor.getColumnIndex("province_code")));
                 list.add(province);
@@ -88,7 +88,7 @@ public class CoolWeatherDB {
             ContentValues values = new ContentValues();
             values.put("city_name", city.getCityName());
             values.put("city_code", city.getCityCode());
-            values.put("provinceId", city.getProvinceId());
+            values.put("province_id", city.getProvinceId());
             db.insert("City", null, values);
         }
     }
@@ -102,7 +102,7 @@ public class CoolWeatherDB {
         if (cursor.moveToFirst()){
             do {
                 City city = new City();
-                city.setId(cursor.getColumnIndex("id"));
+                city.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 city.setCityName(cursor.getString(cursor.getColumnIndex("city_name")));
                 city.setCityCode(cursor.getString(cursor.getColumnIndex("city_code")));
                 city.setProvinceId(provinceId);
@@ -133,10 +133,10 @@ public class CoolWeatherDB {
     * */
     public List<County> loadCounties(int cityId){
         List<County> list = new ArrayList<County>();
-        Cursor cursor = db.query("City", null, "city_id = ?", new String[]{String.valueOf(cityId)}, null, null, null);
+        Cursor cursor = db.query("County", null, "city_id = ?", new String[]{String.valueOf(cityId)}, null, null, null);
         if (cursor.moveToFirst()){
             County county = new County();
-            county.setId(cursor.getColumnIndex("id"));
+            county.setId(cursor.getInt(cursor.getColumnIndex("id")));
             county.setCountyName(cursor.getString(cursor.getColumnIndex("county_name")));
             county.setCountyCode(cursor.getString(cursor.getColumnIndex("county_code")));
             county.setCityId(cityId);
